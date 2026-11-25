@@ -5,7 +5,18 @@ const os = require("os");
 const { createHash } = require("crypto");
 
 function expandHomePath(value) {
-  const trimmed = value.trim();
+  let trimmed = value.trim();
+  while (trimmed.length >= 2) {
+    const quote = trimmed[0];
+    if (
+      (quote !== "'" && quote !== '"') ||
+      trimmed[trimmed.length - 1] !== quote
+    ) {
+      break;
+    }
+    trimmed = trimmed.slice(1, -1).trim();
+  }
+
   if (trimmed === "~") {
     return os.homedir();
   }

@@ -99,3 +99,26 @@ test(
     await assert.rejects(fs.access(path.join(target, ".cache")));
   },
 );
+
+test("accepts a quoted destination path containing spaces", async (t) => {
+  const { source, destination } = await createTestVault(t);
+  const spacedDestination = `${destination} with spaces`;
+  await createFile(path.join(source, "note.md"), "Note");
+
+  const result = await runVaultBackup({
+    configuredSource: source,
+    detectedSource: "",
+    destinationSetting: `''${spacedDestination}''`,
+    excludePaths: "",
+    ignoreHiddenFolders: true,
+  });
+
+  assert.equal(
+    result.targetPath,
+    path.join(await fs.realpath(spacedDestination), "[BACKUP] Vault"),
+  );
+  assert.equal(
+    await fs.readFile(path.join(result.targetPath, "note.md"), "utf8"),
+    "Note",
+  );
+});

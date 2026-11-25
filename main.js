@@ -170,7 +170,18 @@ const os = require("os");
 const { createHash } = require("crypto");
 
 function expandHomePath(value) {
-  const trimmed = value.trim();
+  let trimmed = value.trim();
+  while (trimmed.length >= 2) {
+    const quote = trimmed[0];
+    if (
+      (quote !== "'" && quote !== '"') ||
+      trimmed[trimmed.length - 1] !== quote
+    ) {
+      break;
+    }
+    trimmed = trimmed.slice(1, -1).trim();
+  }
+
   if (trimmed === "~") {
     return os.homedir();
   }
@@ -538,7 +549,7 @@ module.exports = class BackupVaultSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Backup destination folder")
       .setDesc(
-        "Path to the folder on the other drive that will contain the backup. A folder named after this vault will be created inside it. Paths may start with ~ for your home folder.",
+        "Path to the folder on the other drive that will contain the backup. A folder named after this vault will be created inside it. Paths may start with ~ for your home folder and may be wrapped in quotes if they contain spaces.",
       )
       .addText((text) =>
         text

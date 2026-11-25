@@ -37,7 +37,9 @@ To update an existing clone, run `git pull` from the plugin directory.
 
 Open **Settings > Community plugins > Vault Backup**.
 
-- Set the destination folder on the drive where backups should be stored.
+- Set the destination folder on the drive where backups should be stored. Paths
+  may start with `~` for your home folder and may be wrapped in quotes if they
+  contain spaces.
 - Leave the source path blank to detect the current vault, or set an absolute
   path.
 - Add one vault-relative path per line to **Excluded paths**.
