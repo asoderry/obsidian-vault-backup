@@ -1,0 +1,7 @@
+# Obsidian stores per-device paths and preferences here.
+data.json
+
+# Local development files.
+.DS_Store
+node_modules/
+coverage/

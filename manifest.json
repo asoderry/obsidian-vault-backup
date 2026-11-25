@@ -1,0 +1,9 @@
+{
+  "id": "backup-vault",
+  "name": "Vault Backup",
+  "version": "1.2.1",
+  "minAppVersion": "1.5.0",
+  "description": "Create incremental vault backups with exclusions and scheduled runs.",
+  "author": "Dante Toole",
+  "isDesktopOnly": true
+}
